@@ -1,0 +1,63 @@
+{extends file="main.html"}
+
+
+{block name=footer}Stopka{/block}
+
+{block name=content}
+
+<h1>Prosty kalkulator kredytowy</h1>
+
+<form class="pure-form pure-form-stacked" action="{$conf->action_root}calcCompute" method="post">
+    <fieldset>
+      
+	
+	<label for="x"><br>Kwota kredytu:</br> </label>
+        <input id="id_x" type="number" name="x" min = "0" placeholder="25000" value='{$form->x}' />
+	<label for="id_y"><br>Okres spłaty w miesiącach: </br> </label>
+	<input id="id_y" type="number" name="y" min = "0" placeholder ="48" value='{$form->y}'/>
+        <label for="id_z"><br>Oprocentowanie:</br> </label>
+        <input id="id_z" type="number" name="z" step = "0.01" min = "0" max ="100" placeholder="5" value='{$form->z}' />
+	
+     
+    
+    </fieldset> 
+       <button type="submit" name="submit" class="pure-button pure-button-primary">Oblicz</button>
+</form>	
+
+
+<div class="messages">
+
+{* wyświeltenie listy błędów, jeśli istnieją *}
+{if $msgs->isError()}
+	<h4>Wystąpiły błędy: </h4>
+	<ol class="err">
+	{foreach $msgs->getErrors() as $err}
+	{strip}
+		<li>{$err}</li>
+	{/strip}
+	{/foreach}
+	</ol>
+{/if}
+
+{* wyświeltenie listy informacji, jeśli istnieją *}
+{if $msgs->isInfo()}
+	<h4>Informacje: </h4>
+	<ol class="inf">
+	{foreach $msgs->getInfos() as $inf}
+	{strip}
+		<li>{$inf}</li>
+	{/strip}
+	{/foreach}
+	</ol>
+{/if}
+
+{if isset($res->result)}
+	<h4>Wynik</h4>
+	<p class="res">
+	{$res->result}
+	</p>
+{/if}
+
+</div>
+
+{/block}
